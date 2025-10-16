@@ -9,11 +9,7 @@
 --    :Lazy update
 --
 require('lazy').setup({
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
-
-  -- modular approach: using `require 'path.name'` will
-  -- include a plugin definition from file lua/path/name.lua
 
   require 'kickstart.plugins.gitsigns',
 
@@ -35,15 +31,17 @@ require('lazy').setup({
 
   require 'kickstart.plugins.treesitter',
 
-  -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
+
   require 'kickstart.plugins.neo-tree',
 
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  -- require 'kickstart.plugins.debug',
 
+  require 'kickstart.plugins.indent_line',
+
+  require 'kickstart.plugins.lint',
+
+  require 'custom.plugins.swift',
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {

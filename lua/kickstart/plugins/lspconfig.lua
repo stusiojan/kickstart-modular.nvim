@@ -1,8 +1,6 @@
 -- LSP Plugins
 return {
   {
-    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-    -- used for completion, annotations and signatures of Neovim apis
     'folke/lazydev.nvim',
     ft = 'lua',
     opts = {
@@ -16,8 +14,6 @@ return {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
     dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for Neovim
-      -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
       { 'mason-org/mason.nvim', opts = {} },
       'mason-org/mason-lspconfig.nvim',
@@ -39,7 +35,6 @@ return {
           end
 
           -- Rename the variable under your cursor.
-          --  Most Language Servers support renaming across files, etc.
           map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
@@ -164,6 +159,18 @@ return {
       --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
+      -- For swift development, NOTE: Does not work
+      -- local lspconfig = require 'lspconfig'
+      -- lspconfig.sourcekit.setup {
+      --   capabilities = {
+      --     workspace = {
+      --       didChangeWatchedFiles = {
+      --         dynamicRegistration = true,
+      --       },
+      --     },
+      --   },
+      -- }
+
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --
@@ -173,23 +180,50 @@ return {
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+
+      -- here try lsp.config for sourcekit
+
+      vim.lsp.config('sourcekit', {
+        cmd = { 'sourcekit-lsp' },
+        filetypes = { 'swift' },
+        root_markers = { 'Package.swift', '.git' },
+        capabilities = {
+          workspace = {
+            didChangeWatchedFiles = {
+              dynamicRegistration = true,
+            },
+          },
+        },
+      })
+      vim.lsp.enable 'sourcekit'
+
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- rust_analyzer = {},
+        -- gopls = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
+
+        rust_analyzer = {},
 
         pyright = {
           settings = {
             python = {
               pythonPath = vim.fn.exepath 'python',
-              analysis = {
-                autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
-                diagnosticMode = 'workspace',
-                typeCheckingMode = 'basic',
-              },
+
+              -- pythonPath = (function()
+              --   local conda_prefix = os.getenv(CONDA_PREFIX)
+              --   if conda_prefix then
+              --     return conda_prefix .. '/bin/python'
+              --   end
+              --   return vim.fn.exepath 'python'
+              -- end)(),
+              --
+              -- analysis = {
+              --   autoSearchPaths = true,
+              --   useLibraryCodeForTypes = true,
+              --   diagnosticMode = 'workspace',
+              --   typeCheckingMode = 'basic',
+              -- },
             },
           },
           root_dir = function(fname)
