@@ -198,12 +198,10 @@ return {
       vim.lsp.enable 'sourcekit'
 
       local servers = {
-        -- clangd = {},
-        -- gopls = {},
-        -- gopls = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-
-        rust_analyzer = {},
+        clangd = {},
+        gopls = {},
+        -- rust_analyzer = {},
 
         pyright = {
           settings = {
