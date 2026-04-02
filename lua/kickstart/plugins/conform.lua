@@ -28,7 +28,8 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        python = { 'isort', 'black' },
+        python = { 'black' },
+        -- python = { 'isort', 'black' },
         -- NOTE: Add more language formatters as needed here
       },
     },
