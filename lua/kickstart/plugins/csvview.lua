@@ -63,6 +63,32 @@ return {
       pattern = { 'csv', 'tsv' },
       callback = function()
         require('csvview').enable()
+
+        local wk = require 'which-key'
+        wk.add {
+          { '<leader>C', group = '[C]SV', buffer = true },
+          { '<leader>Ct', '<cmd>CsvViewToggle<cr>', desc = '[T]oggle', buffer = true },
+          { '<leader>Ce', '<cmd>CsvViewEnable<cr>', desc = '[E]nable', buffer = true },
+          { '<leader>Cd', '<cmd>CsvViewDisable<cr>', desc = '[D]isable', buffer = true },
+          {
+            '<leader>Ci',
+            function()
+              vim.notify(
+                'CSV Navigation:\n'
+                  .. '  Tab        → następne pole (w prawo)\n'
+                  .. '  Shift+Tab  → poprzednie pole (w lewo)\n'
+                  .. '  Enter      → wiersz w dół\n'
+                  .. '  Shift+Enter→ wiersz w górę\n'
+                  .. '  if         → zaznacz wewnątrz pola (text object)\n'
+                  .. '  af         → zaznacz całe pole (text object)',
+                vim.log.levels.INFO,
+                { title = 'CSV Navigation' }
+              )
+            end,
+            desc = 'Navigation [I]nstructions',
+            buffer = true,
+          },
+        }
       end,
     })
   end,
