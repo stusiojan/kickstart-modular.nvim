@@ -44,6 +44,8 @@ require('lazy').setup({
   require 'custom.plugins.swift',
 
   require 'kickstart.plugins.markview',
+
+  require 'kickstart.plugins.csvview',
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
