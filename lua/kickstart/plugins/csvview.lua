@@ -27,7 +27,7 @@ return {
     view = {
       min_column_width = 5,
       spacing = 2,
-      display_mode = 'highlight',
+      display_mode = 'border',
       header_lnum = true,
       sticky_header = {
         enabled = true,
