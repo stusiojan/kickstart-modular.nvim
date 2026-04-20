@@ -48,6 +48,8 @@ require('lazy').setup({
   require 'kickstart.plugins.csvview',
 
   require 'kickstart.plugins.noice',
+
+  require 'kickstart.plugins.yazi',
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {

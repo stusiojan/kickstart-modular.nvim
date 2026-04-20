@@ -70,6 +70,17 @@ return {
         map('n', '<leader>hD', function()
           gitsigns.diffthis '@'
         end, { desc = 'git [D]iff against last commit' })
+        -- Compare
+        map('n', '<leader>hcm', function()
+          gitsigns.change_base('origin/main', true)
+        end, { desc = 'compare with [m]ain' })
+        map('n', '<leader>hcq', function()
+          vim.cmd("cexpr system('git diff --numstat origin/main | awk -F\"\\t\" ''{print $3\":1:+\"$1\" -\"$2}''') | copen")
+        end, { desc = 'show diff [q]uickfix list' })
+        map('n', '<leader>hcr', function()
+          gitsigns.reset_base(true)
+        end, { desc = '[r]eset base' })
+
         -- Toggles
         map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
         map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })
