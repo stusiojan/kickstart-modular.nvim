@@ -43,6 +43,8 @@ require('lazy').setup({
 
   require 'custom.plugins.swift',
 
+  require 'custom.plugins.latex',
+
   require 'kickstart.plugins.markview',
 
   require 'kickstart.plugins.csvview',
