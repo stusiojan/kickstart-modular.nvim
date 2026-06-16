@@ -202,6 +202,7 @@ return {
         clangd = {},
         gopls = {},
         -- rust_analyzer = {},
+        templ = {},
 
         ts_ls = {
           settings = {

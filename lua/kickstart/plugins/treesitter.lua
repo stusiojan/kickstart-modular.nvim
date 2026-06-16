@@ -70,6 +70,7 @@ return {
         'go',
         'gomod',
         'gosum',
+        'templ',
         'swift',
       }
       require('nvim-treesitter').install(parsers)
@@ -87,6 +88,63 @@ return {
           end
         end,
       })
+
+      local history = {}
+
+      local function select_node(node)
+        if not node then
+          return
+        end
+        local srow, scol, erow, ecol = node:range()
+
+        -- node:range() returns an exclusive end. If it lands at column 0
+        -- of the next line, back up to the end of the previous line.
+        if ecol == 0 and erow > srow then
+          erow = erow - 1
+          local line = vim.api.nvim_buf_get_lines(0, erow, erow + 1, false)[1] or ''
+          ecol = #line
+        end
+
+        -- Exit visual mode if we're already in it, so `normal! v` starts fresh
+        -- instead of toggling visual mode off.
+        if vim.fn.mode():match '^[vV\22]' then
+          vim.cmd 'normal! \27'
+        end
+
+        vim.api.nvim_win_set_cursor(0, { srow + 1, scol })
+        vim.cmd 'normal! v'
+        vim.api.nvim_win_set_cursor(0, { erow + 1, math.max(ecol - 1, 0) })
+      end
+
+      vim.keymap.set('n', '<CR>', function()
+        local node = vim.treesitter.get_node()
+        if not node then
+          return
+        end
+        history = { node }
+        select_node(node)
+      end, { desc = 'Init treesitter selection' })
+
+      vim.keymap.set('x', '<CR>', function()
+        local cur = history[#history]
+        if not cur then
+          return
+        end
+        local parent = cur:parent()
+        if not parent then
+          return
+        end
+        table.insert(history, parent)
+        select_node(parent)
+      end, { desc = 'Increment treesitter selection' })
+
+      vim.keymap.set('x', '<BS>', function()
+        if #history <= 1 then
+          return
+        end
+        table.remove(history)
+        select_node(history[#history])
+      end, { desc = 'Decrement treesitter selection' })
     end,
   },
 }
