@@ -203,7 +203,6 @@ return {
         gopls = {},
         -- rust_analyzer = {},
         templ = {},
-        kotlin_language_server = {},
 
         ts_ls = {
           settings = {

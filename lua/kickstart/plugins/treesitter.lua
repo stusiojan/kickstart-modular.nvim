@@ -72,7 +72,6 @@ return {
         'gosum',
         'templ',
         'swift',
-        'kotlin',
       }
       require('nvim-treesitter').install(parsers)
 
