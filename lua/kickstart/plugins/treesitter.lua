@@ -72,6 +72,9 @@ return {
         'gosum',
         'templ',
         'swift',
+        'http',
+        'json',
+        'graphql',
       }
       require('nvim-treesitter').install(parsers)
 

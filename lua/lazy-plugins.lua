@@ -52,6 +52,8 @@ require('lazy').setup({
   require 'kickstart.plugins.noice',
 
   require 'kickstart.plugins.yazi',
+
+  require 'custom.plugins.kulala',
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
