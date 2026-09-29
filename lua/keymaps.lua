@@ -34,4 +34,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- [[ Copy file path to clipboard ]]
+vim.api.nvim_create_user_command('CopyPath', function()
+  local path = vim.fn.expand '%:p'
+  vim.fn.setreg('+', path)
+  print('Copied: ' .. path)
+end, { desc = 'Copy absolute file path' })
+
+vim.api.nvim_create_user_command('CopyRelPath', function()
+  local path = vim.fn.expand '%:.'
+  vim.fn.setreg('+', path)
+  print('Copied: ' .. path)
+end, { desc = 'Copy file path relative to cwd' })
+
 -- vim: ts=2 sts=2 sw=2 et
