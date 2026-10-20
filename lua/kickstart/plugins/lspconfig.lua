@@ -203,6 +203,7 @@ return {
         gopls = {},
         -- rust_analyzer = {},
         templ = {},
+        just = {},
 
         ts_ls = {
           settings = {

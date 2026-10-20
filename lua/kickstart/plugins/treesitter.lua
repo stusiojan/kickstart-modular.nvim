@@ -75,6 +75,7 @@ return {
         'http',
         'json',
         'graphql',
+        'just',
       }
       require('nvim-treesitter').install(parsers)
 
